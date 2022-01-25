@@ -1,0 +1,51 @@
+.\" Copyright (c) 2022 Corey Hinshaw
+.\"
+.\" Permission to use, copy, modify, and/or distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+.\" REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+.\" AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+.\" INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+.\" LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+.\" OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+.\" PERFORMANCE OF THIS SOFTWARE.
+.\"
+.TH MYTERM 1 myterm\-0.1.0
+.SH NAME
+myterm \- launch terminal emulator
+.SH SYNOPSIS
+.B myterm
+.RB [ ARG... ]
+.SH DESCRIPTION
+myterm is a simple utility to start a user's preferred terminal emulator. The name of the terminal binary is read from the TERMINAL environment variable. If TERMINAL is not found in the process environment, the terminal can be read from a file (see below).
+
+All arguments to myterm are passed directly to the terminal emulator. If needed, TERMINAL_STRIP can be used to remove a single argument before executing the terminal.
+
+TERMINAL may be configured to point to myterm itself. In this case, myterm will look for the terminal name in TERMINAL_CMD or the configuration files discussed below.
+.SH ENVIRONMENT VARIABLES
+.TP
+.B TERMINAL
+Name of the terminal emulator binary to start.
+.TP
+.B TERMINAL_ARGS
+Space separated list of additional arguments to pass to the terminal. Inserted before any arguments passed to myterm.
+.TP
+.B TERMINAL_CMD
+If TERMINAL points to myterm, TERMINAL_CMD can be used to specify the terminal to start.
+.TP
+.B TERMINAL_STRIP
+Argument to remove before starting the terminal. Only strips the argument if it appears first in the argument list.
+.SH FILES
+If TERMINAL is not set, myterm will attempt to read the binary name of a terminal emulator from the following files, in order:
+.PP
+$XDG_CONFIG_HOME/terminal
+.br
+$HOME/.config/terminal
+.br
+$HOME/.terminal
+.PP
+The file should contain only the binary name or path on a single line.
+.SH COPYRIGHT
+Copyright (c) 2022 Corey Hinshaw
