@@ -3,21 +3,17 @@ PREFIX = /usr/local
 MANPREFIX = $(PREFIX)/man
 
 RM = rm -f
-GZIP = gzip --force -9 --keep
 INSTALL = install
 
 CFLAGS_EXTRA = -pedantic -Wall -Wextra -Werror -Wno-unused-parameter -Os -s
 CFLAGS := $(CFLAGS_EXTRA) $(CFLAGS) -std=c99
 
 TARGET = myterm
-MAN = $(TARGET).1.gz
+MAN = $(TARGET).1
 
-all: $(TARGET) $(MAN)
+all: $(TARGET)
 
 $(TARGET): $(TARGET).c
-
-$(MAN): $(MAN:%.gz=%)
-	$(GZIP) $<
 
 .PHONY: install uninstall clean
 
@@ -32,4 +28,4 @@ uninstall:
 	$(RM) $(DESTDIR)$(MANPREFIX)/man1/$(MAN)
 
 clean:
-	$(RM) $(TARGET) $(MAN)
+	$(RM) $(TARGET)

@@ -116,6 +116,10 @@ static int read_term(char *term_cmd, size_t len)
 		path = concat(path, 3, dir, "/", CONFIG_FILE);
 	}
 
+	if (access(path, F_OK) != 0) {
+		return 0;
+	}
+
 	if ((fp = fopen(path, "r")) == NULL) {
 		dir = getenv("HOME");
 		if (empty(dir)) {
@@ -143,12 +147,12 @@ error:
 int main (int argc, char **argv)
 {
 	char *name = PROGNAME;
-	char *term;
-	char term_cmd[PATH_MAX];
-	char *strip_arg;
-	char *term_args;
+	char *term = "";
+	char term_cmd[PATH_MAX] = "";
+	char *strip_arg = "";
+	char *term_args = "";
 	size_t exec_argc = 0;
-	size_t term_argc = 0;
+	size_t term_argc = 1;
 	size_t copy_argc = 0;
 	char **exec_argv = NULL;
 
